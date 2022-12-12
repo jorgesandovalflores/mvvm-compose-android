@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="component_progress_popup_size">168dp</dimen>
+    <dimen name="component_progress_popup_corner_radius">15dp</dimen>
+    <dimen name="component_progress_popup_spacing_top">37dp</dimen>
+    <dimen name="component_progress_popup_spacing_middle">25dp</dimen>
+    <dimen name="component_progress_indicator_size">72dp</dimen>
+    <dimen name="component_progress_indicator_stroke_width">6.5dp</dimen>
+</resources>

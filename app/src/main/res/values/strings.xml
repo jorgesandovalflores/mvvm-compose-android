@@ -1,0 +1,4 @@
+<resources>
+    <string name="core_exception_unauthorized">No tienes permiso, vuelvo a loguearte</string>
+    <string name="core_exception_generic">Algo sucedió, intenténtalo nuevamente</string>
+</resources>

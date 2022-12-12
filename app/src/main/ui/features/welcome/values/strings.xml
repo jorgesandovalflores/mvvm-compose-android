@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_welcome_logo_content_desc">Welcome Logo</string>
+    <string name="feature_welcome_title">¡Bienvenido!</string>
+    <string name="feature_welcome_message">Acepta pagos con tarjetas en\ncualquier momento y lugar \nusando tu teléfono.</string>
+    <string name="feature_welcome_register_button">Registrarme</string>
+    <string name="feature_welcome_already_registered_button">Ya estoy registrado</string>
+</resources>

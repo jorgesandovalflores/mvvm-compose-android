@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="component_toolbar_app_top_bar_elevation">20dp</dimen>
+    <dimen name="component_toolbar_height_min">64dp</dimen>
+</resources>

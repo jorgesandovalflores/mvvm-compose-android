@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="component_button_primary_enabled">#FF212121</color>
+    <color name="component_button_primary_disabled">#55212121</color>
+    <color name="component_button_secondary_enabled">#FF212121</color>
+    <color name="component_button_secondary_disabled">#FFBCBCBC</color>
+    <color name="component_button_gradient_enabled_start">#FFFFC100</color>
+    <color name="component_button_gradient_enabled_end">#FFFFE083</color>
+    <color name="component_button_gradient_disabled_start">#FFFFECB5</color>
+    <color name="component_button_gradient_disabled_end">#FFFFE8E1</color>
+</resources>

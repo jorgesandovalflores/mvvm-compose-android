@@ -1,0 +1,85 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        applicationId = 'com.quebuu.mvvm_compose_android'
+        projectName = 'Proyecto mvvm compose'
+        // Application version
+        versionMajor = 1
+        versionMinor = 0
+        versionPatch = 0
+        versionCode = 1
+
+        // Sdk and tools
+        compileSdkVersion = 31
+        minSdkVersion = 23
+        targetSdkVersion = 31
+        buildToolsVersion = '31.0.0'
+
+        // App dependencies
+        activityComposeVersion = '1.5.0'
+        appCompatVersion = '1.4.2'
+        accompanistVersion = '0.23.1'
+        coilVersion = '2.1.0'
+        composeCompilerVersion = '1.2.0'
+        composeVersion = '1.1.1'
+        constraintLayoutVersion = '2.1.4'
+        constraintLayoutComposeVersion = '1.0.1'
+        coreTestingVersion = '2.1.0'
+        coroutinesVersion = '1.6.3'
+        espressoVersion = '3.4.0'
+        fragmentVersion = '1.5.0'
+        gradleVersion = '7.2.1'
+        gradleGitVersion = '0.15.0'
+        gsonVersion = '2.9.0'
+        hiltVersion = '2.42'
+        hiltNavCompose = '1.0.0'
+        jacocoVersion = '0.8.8'
+        junitVersion = '4.13.2'
+        junitJupiterVersion = '5.8.2'
+        kotlinVersion = '1.7.0'
+        kotlinSerializationJsonVersion = '1.3.3'
+        koverVersion = '0.5.1'
+        ktxVersion = '1.8.0'
+        legacySupportVersion = '1.0.0'
+        lifecycleVersion = '2.5.0'
+        materialVersion = '1.6.1'
+        mockkVersion = '1.12.4'
+        navigationVersion = '2.5.0'
+        okhttpLoggingVersion = '4.9.1'
+        retrofitVersion = '2.9.0'
+        roomVersion = '2.4.2'
+        testCoreVersion = '1.4.0'
+        testExtJunitVersion = '1.1.3'
+        testRunnerVersion = '1.4.0'
+        viewmodelComposeVersion = '2.5.0'
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradleVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+        classpath "com.palantir.gradle.gitversion:gradle-git-version:$gradleGitVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+        classpath "org.jetbrains.kotlinx:kover:$koverVersion"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

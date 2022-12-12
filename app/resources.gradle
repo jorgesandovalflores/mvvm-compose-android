@@ -1,0 +1,21 @@
+android {
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    //core
+                    'src/main/res',
+
+                    //common
+                    'src/main/ui/components/textinput',
+                    'src/main/ui/components/buttons',
+                    'src/main/ui/components/progress',
+                    'src/main/ui/components/toolbar',
+
+                    //features
+                    'src/main/ui/features/login',
+                    'src/main/ui/features/splash',
+                    'src/main/ui/features/welcome'
+            ]
+        }
+    }
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="feature_splash_version_top_padding">24dp</dimen>
+    <dimen name="feature_splash_version_start_padding">24dp</dimen>
+    <dimen name="feature_splash_copyright_bottom_padding">40dp</dimen>
+</resources>

@@ -1,0 +1,116 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
+    id 'com.palantir.git-version'
+    id 'jacoco'
+    id 'org.jetbrains.kotlinx.kover'
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.applicationId
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName "${rootProject.versionMajor}.${rootProject.versionMinor}.${rootProject.versionPatch}-RELEASE-${rootProject.versionCode}"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "DATABASE_NAME", '"name-db"'
+    }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            testCoverageEnabled true
+        }
+    }
+
+    flavorDimensions 'version'
+
+    productFlavors {
+        dev {
+            dimension 'version'
+            applicationIdSuffix '.dev'
+            resValue "string", "app_name", "${rootProject.projectName} (Dev)"
+            buildConfigField "String", "API_BASE_URL", '"https://62cc59dda080052930aa14a7.mockapi.io/api/"'
+            buildConfigField "String", "API_KEY", '""'
+            buildConfigField "int", "DATABASE_VERSION", '1'
+        }
+
+        qa {
+            dimension 'version'
+            applicationIdSuffix '.qa'
+            resValue "string", "app_name", "${rootProject.projectName} (QA)"
+            buildConfigField "String", "API_BASE_URL", '"https://62cc59dda080052930aa14a7.mockapi.io/api/"'
+            buildConfigField "String", "API_KEY", '""'
+            buildConfigField "int", "DATABASE_VERSION", '1'
+        }
+
+        prod {
+            resValue "string", "app_name", rootProject.projectName
+            buildConfigField "String", "API_BASE_URL", '"https://62cc59dda080052930aa14a7.mockapi.io/api/"'
+            buildConfigField "String", "API_KEY", '""'
+            buildConfigField "int", "DATABASE_VERSION", '1'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name == 'debug') {
+                versionNameOverride = "${rootProject.versionMajor}.${rootProject.versionMinor}.${rootProject.versionPatch}-SNAPSHOT-${gitVersion()}"
+                outputFileName = "lima-${variant.buildType.name}-${versionNameOverride}.apk"
+            } else {
+                outputFileName = "lima-${variant.buildType.name}-${defaultConfig.versionName}.apk"
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        // Enable Coroutines
+        freeCompilerArgs += '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi'
+    }
+
+    tasks.koverMergedHtmlReport {
+        enabled = true
+        includes = ['com.quebuu.mvvm_compose_android.*']
+        excludes = [
+                'dagger.*',
+                'hilt_aggregated_deps.*',
+                'com.quebuu.mvvm_compose_android.**.di.*',
+                'com.quebuu.mvvm_compose_android.**.theme.*',
+                'com.quebuu.mvvm_compose_android.**.navigation.*',
+                'com.quebuu.mvvm_compose_android.**.view.*'
+        ]
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion rootProject.composeCompilerVersion
+    }
+
+}
+
+apply from: 'resources.gradle'
+apply from: "../jacoco.gradle"
+apply from: 'dependencies.gradle'

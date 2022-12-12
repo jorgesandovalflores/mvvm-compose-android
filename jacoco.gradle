@@ -1,0 +1,87 @@
+jacoco {
+    toolVersion = rootProject.jacocoVersion
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+def coverageExclusions = [
+        // Android
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*',
+        'androidx/**/*.*',
+        // Kotlin
+        '**/*MapperImpl*.*',
+        '**/*$InjectAdapter.class',
+        '**/*$ModuleAdapter.class',
+        '**/*Component*.*',
+        '*/*Component*.*',
+        '**/*BR*.*',
+        '**/*$Lambda$*.*',
+        '**/*Companion*.*',
+        '**/*Module*.*',
+        '**/*_Factory*.*',
+        '**/*_*Factory*.*',
+        '**/*_Provide*Factory*.*',
+        '**/*Extensions*.*',
+        '**/AutoValue_*.*',
+        '**/R2.class',
+        '**/R2$*.class',
+        '**/*Directions$*',
+        '**/*Directions.*',
+        '**/*Binding.*',
+        // DI
+        '**/*Dagger*.*',
+        '**/*Hilt*.*',
+        '**/*Module*.*',
+        '**/*Module.kt',
+        '**/di/**',
+        'dagger.hilt.internal/*',
+        'hilt_aggregated_deps/**',
+        '**/Dagger*Component.class',
+        '**/Dagger*Component$Builder.class',
+        '**/*Module_*Factory.class',
+        '**/*_MembersInjector.class',
+        '**/*MembersInjector*.*'
+]
+
+project.afterEvaluate {
+    def buildVariant = 'devDebug'
+
+    task jacocoTestReport(type: JacocoReport) {
+        dependsOn("test${buildVariant.capitalize()}UnitTest", "create${buildVariant.capitalize()}CoverageReport")
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports on the Debug build."
+        reports {
+            xml.required = true
+            html.required = true
+        }
+        def javaClasses = fileTree(dir: "${buildDir}/intermediates/javac/${buildVariant}/classes", excludes: coverageExclusions)
+        def kotlinClasses = fileTree(dir: "${buildDir}/tmp/kotlin-classes/${buildVariant}", excludes: coverageExclusions)
+        classDirectories.setFrom(files(javaClasses, kotlinClasses))
+
+        def sourceDirs = ["${projectDir}/src/main/java", "${projectDir}/src/main/kotlin", "${projectDir}/src/${buildVariant}/java", "${projectDir}/src/${buildVariant}/kotlin"]
+        sourceDirectories.setFrom(files(sourceDirs))
+        additionalSourceDirs.setFrom(files(sourceDirs))
+
+        executionData.setFrom(fileTree(dir: "$buildDir", includes: ["jacoco/test${buildVariant}UnitTest.exec", "outputs/code-coverage/connected/*coverage.ec"]))
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { details ->
+            if ('org.jacoco' == details.requested.group) {
+                details.useVersion rootProject.jacocoVersion
+            }
+        }
+    }
+}
+
+tasks["connectedCheck"].finalizedBy("jacocoTestReport")
